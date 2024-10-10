@@ -28,44 +28,48 @@
 
 
 
+
+
+
+
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { View, Text, Button } from "react-native";
 
-const Timer = () => {
-  const [seconds, setSeconds] = useState(60);
-  const [isRunning, setIsRunning] = useState(false);
-
+const CounterTime = () => {
+  const [sec, setsec] = useState(60);
+  const [start, end] = useState(false);
   useEffect(() => {
-    let intervalId;
-    if (isRunning) {
-      intervalId = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds - 1);
-      }, 1000);
+    let interval;
+    if (start) {
+      interval = setInterval(() => setsec((prev) => prev>0?prev-1:0), 1000);
     }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [start, sec]);
 
-    return () => clearInterval(intervalId);
-  }, [isRunning, seconds]);
-
-  const handleStartPause = () => {
-    setIsRunning(!isRunning);
+  const handlereset = () => {
+    setsec(60);
+    end(false);
   };
 
-  const handleReset = () => {
-    setSeconds(60);
-    setIsRunning(false);
+  const handleStart = () => {
+    end(!start);
   };
-
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>{seconds}</Text>
-      <View>
-        <Button
-          title={isRunning ? "Pause" : "Start"}
-          onPress={handleStartPause}
-        />
-        <Button title="Reset" onPress={handleReset} />
-      </View>
+    <View style={{ flex: 1,margin:50}}>
+      <Text>{sec}</Text>
+      <TextInput placeholder="Enter the time" style={{width:1,borderColor:"black",borderRadius:1}}/>
+      <Button onPress={handlereset} title="reset" />
+      <Button onPress={handleStart} title={start? "end":"start"} />
     </View>
   );
 };
-export default Timer;
+
+export default CounterTime;
+
+const styles = StyleSheet.create({});
+
+
+
+

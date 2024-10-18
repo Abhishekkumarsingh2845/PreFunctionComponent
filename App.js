@@ -1,28 +1,288 @@
-// import React from 'react';
-// import { Provider } from 'react-redux';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import store from './Src/profileRedux/store';
-// import Comp1 from './comp1';
-// import Comp2 from './comp2';
-
-// const Stack = createNativeStackNavigator();
+// import React, { useState, useEffect } from "react";
+// import { Button, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 
 // const App = () => {
+//   const [timers, setTimers] = useState([]);
+
+//   const addNewTimer = () => {
+//     setTimers((prev) => [...prev, { seconds: 0, running: false }]);
+//   };
+
+//   const handleReset = (index) => {
+//     setTimers((prev) =>
+//       prev.map((timer, i) => (i === index ? { seconds: 0, running: false } : timer))
+//     );
+//   };
+
+//   const handleStartPause = (index) => {
+//     setTimers((prev) =>
+//       prev.map((timer, i) => {
+//         if (i === index) {
+//           return { ...timer, running: !timer.running };
+//         }
+//         return timer;
+//       })
+//     );
+//   };
+
+//   // Effect for each timer
+//   useEffect(() => {
+//     const intervals = timers.map((timer, index) => {
+//       if (timer.running && timer.seconds > 0) {
+//         const interval = setInterval(() => {
+//           setTimers((prev) => {
+//             const updatedTimers = [...prev];
+//             updatedTimers[index] = { ...updatedTimers[index], seconds: updatedTimers[index].seconds - 1 };
+//             return updatedTimers;
+//           });
+//         }, 1000);
+
+//         return interval; // Return interval to be cleared later
+//       }
+//       return null; // Return null if not running
+//     });
+
+//     return () => {
+//       intervals.forEach((interval) => {
+//         if (interval) clearInterval(interval); // Clear active intervals
+//       });
+//     };
+//   }, [timers]); // Run effect when timers change
+
 //   return (
-//     <Provider store={store}>
-//       <NavigationContainer>
-//         <Stack.Navigator initialRouteName="Input">
-//           <Stack.Screen name="comp1" component={Comp1} />
-//           <Stack.Screen name="comp2" component={Comp2} />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </Provider>
+//     <ScrollView contentContainerStyle={styles.container}>
+//       <Button title="Add Timer" onPress={addNewTimer} />
+//       {timers.map((timer, index) => (
+//         <View key={index} style={styles.timerContainer}>
+//           <Text>Remaining Time: {timer.seconds}</Text>
+//           <TextInput
+//             placeholder="Enter seconds"
+//             style={styles.input}
+//             keyboardType="numeric"
+//             onChangeText={(text) => {
+//               const value = Number(text) || 0;
+//               setTimers((prev) =>
+//                 prev.map((t, i) => (i === index ? { ...t, seconds: value } : t))
+//               );
+//             }}
+//             editable={timer.running === false}
+//           />
+//           <Button
+//             title={timer.running ? "Pause" : "Start"}
+//             onPress={() => handleStartPause(index)}
+//           />
+//           <Button title="Reset" onPress={() => handleReset(index)} />
+//         </View>
+//       ))}
+//     </ScrollView>
 //   );
 // };
 
 // export default App;
-// App.js
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flexGrow: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     paddingVertical: 20,
+//   },
+//   timerContainer: {
+//     marginBottom: 20,
+//     alignItems: "center",
+//   },
+//   input: {
+//     borderColor: "black",
+//     borderWidth: 1,
+//     width: 150,
+//     textAlign: "center",
+//     marginBottom: 10,
+//   },
+// });
+
+// import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+// import React, { useState } from "react";
+
+// const App = () => {
+//   const [text, settext] = useState(" ");
+//   const [display, setdisplay] = useState("");
+//   const add = () => {
+//     setdisplay(text);
+//     settext("");
+//   };
+//   return (
+//     <View style={styles.aa}>
+//       <Text>{display}</Text>
+//       <TextInput
+//         value={text}
+//         onChangeText={settext}
+//         style={{ backgroundColor: "red", width: 200 }}
+//       />
+//       <Button title="press" onPress={add} />
+//     </View>
+//   );
+// };
+
+// export default App;
+
+// const styles = StyleSheet.create({
+//   aa: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+// });
+
+// import { StyleSheet, Text, View } from "react-native";
+// import React, { useState, useEffect } from "react";
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createStackNavigator } from "@react-navigation/stack";
+// import Login from "./Src/Screen/Login";
+// import HomeTabs from "./Src/Screen/Home";
+// import Additional from "./Src/Screen/Additional";
+// import DrawerMain from "./Src/Drawer/Drawer1";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// const Stack = createStackNavigator();
+
+// const App = () => {
+//   const [inital, setinital] = useState("Login");
+//   useEffect(() => {
+//     const finalscreen = async () => {
+//       const final = AsyncStorage.getItem("last");
+//       if (final) {
+//         setinital(last);
+//       }
+//     };
+//     finalscreen();
+//   }, []);
+
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator
+//         screenOptions={{
+//           headerShown: false,
+//         }}
+//       >
+//         <Stack.Screen name="Login" component={Login} />
+//         <Stack.Screen name="Home" component={HomeTabs} />
+//         <Stack.Screen name="Drawer" component={DrawerMain} />
+//         <Stack.Screen name="Additional" component={Additional}/>
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// };
+
+// export default App;
+
+// const styles = StyleSheet.create({});
+
+// import React, { useEffect, useState } from "react";
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createStackNavigator } from "@react-navigation/stack";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+// import Screen1 from "./Src/Peristence.js/Screen1";
+// import Screen2 from "./Src/Peristence.js/Screen2";
+
+// const Stack = createStackNavigator();
+
+// const App = () => {
+//   const [initialState, setInitialState] = useState();
+//   const [isLoading, setIsLoading] = useState(true);
+
+//   useEffect(() => {
+//     const restoreState = async () => {
+//       try {
+//         const savedState = await AsyncStorage.getItem("navigationState");
+//         console.log("Retrieved saved state:", savedState);
+//         if (savedState) {
+//           setInitialState(JSON.parse(savedState));
+//         }
+//       } catch (error) {
+//         console.error("Failed to load navigation state:", error);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+//     restoreState();
+//   }, []);
+
+//   const onStateChange = (state) => {
+//     console.log("Current navigation state:", state);
+//     AsyncStorage.setItem("navigationState", JSON.stringify(state));
+//   };
+
+//   if (isLoading) {
+//     return null;
+//   }
+
+//   return (
+//     <NavigationContainer
+//       initialState={initialState}
+//       onStateChange={onStateChange}
+//     >
+//       <Stack.Navigator>
+//         <Stack.Screen name="Screen1" component={Screen1} />
+//         <Stack.Screen name="Screen2" component={Screen2} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// };
+
+// import {
+//   StyleSheet,
+//   Text,
+//   View,
+//   TextInput,
+//   Button,
+//   FlatList,
+//   TouchableOpacity,
+// } from "react-native";
+// import React, { useState } from "react";
+
+// const App = () => {
+//   const [text, settext] = useState("");
+//   const [data, setdata] = useState([]);
+
+//   const add = () => {
+//     if (text) {
+//       setdata([...data,text]);
+//       settext("");
+//     }
+//   };
+
+//   const remove = (index) => {
+//     const uu = data.filter((_, i) => i != index);
+//     setdata(uu);
+//   };
+//   return (
+//     <View>
+//       <Text>App</Text>
+//       <TextInput
+//         placeholder="enter your task"
+//         value={text}
+//         onChangeText={settext}
+//       />
+//       <Button title="Add" onPress={add} />
+//       <FlatList
+//         data={data}
+//         keyExtractor={(item, index) => index.toString()}
+//         renderItem={({ item, index }) => (
+//           <View>
+//             <Text style={{ fontSize: 12, color: "red" }}>{item}</Text>
+//             <TouchableOpacity onPress={() => remove(index)}>
+//               <Text style={styles.removeText}>Remove</Text>
+//             </TouchableOpacity>
+//           </View>
+//         )}
+//       />
+//     </View>
+//   );
+// };
+
+// export default App;
+
+// const styles = StyleSheet.create({});
 
 
 
@@ -31,94 +291,56 @@
 
 
 
+import { StyleSheet, Text, View, Image } from "react-native";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import home from "./Src/assets/house.png";
+import Home from "./Src/Reducer/Home";
+import pp from "./Src/assets/profile.png";
+import Favourite from "./Src/Reducer/Favourite";
+const Bottom = createBottomTabNavigator();
 
-
-
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useState, useEffect } from "react";
-
-const CounterTime = () => {
-  const [sec, setSec] = useState();
-  const [start, end] = useState(false);
-  const [sec2, setSec2] = useState();
-  const [start2, end2] = useState(false);
-  useEffect(() => {
-    let interval;
-    if (start) {
-      interval = setInterval(
-        () => setSec((prev) => (prev > 0 ? prev - 1 : 0)),
-        1000
-      );
-    }
-    return () => {
-      clearInterval(interval);
-    };
-  }, [start, sec]);
-
-  useEffect(() => {
-    let interval2;
-    if (start2) {
-      interval2 = setInterval(
-        () => setSec2((prev) => (prev > 0 ? prev - 1 : 0)),
-        1000
-      );
-    }
-    return () => {
-      clearInterval(interval2);
-    };
-  }, [start2, sec2]);
-  const handleReset = () => {
-    setSec(0);
-    end(false);
-  };
-
-  const handleReset2 = () => {
-    setSec2(0);
-    end2(false);
-  };
-
-  const handleStart = () => {
-    end(!start);
-  };
-
-  const handleStart2 = () => {
-    end2(!start2);
-  };
-
+const App = () => {
   return (
-    <View style={{ flex: 1, margin: 50 }}>
-      <Text>Timer 1: {sec}</Text>
-      <TextInput
-        value={sec}
-        onChangeText={setSec}
-        placeholder="Enter the time for Timer 1"
-        keyboardType="numeric"
-        style={{ borderWidth: 1, marginBottom: 20 }}
-      />
-      <Button onPress={handleReset} title="Reset" />
-      <Button
-        onPress={handleStart}
-        title={start ? "pause" : "play"}
-      />
-
-
-      <Text style={{ marginTop: 40 }}>Timer 2: {sec2}</Text>
-      <TextInput
-        value={sec2}
-        onChangeText={setSec2}
-        placeholder="Enter the time for Timer 2"
-        keyboardType="numeric"
-        style={{ borderWidth: 1, marginBottom: 20 }}
-      />
-      <Button onPress={handleReset2} title="Reset" />
-      <Button
-        onPress={handleStart2}
-        title={start2 ? "Pause" : "play"}
-      />
-    </View>
+    <NavigationContainer>
+      <Bottom.Navigator>
+        <Bottom.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={home}
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+            ),
+          }}
+        />
+        <Bottom.Screen
+          name="Favourite"
+          component={Favourite}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={pp}
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+            ),
+          }}
+        />
+      </Bottom.Navigator>
+    </NavigationContainer>
   );
 };
 
-export default CounterTime;
+export default App;
 
 const styles = StyleSheet.create({});

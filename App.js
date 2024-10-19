@@ -284,63 +284,65 @@
 
 // const styles = StyleSheet.create({});
 
+import React, { useState } from "react";
+import {
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
+const ImageToggleList = () => {
+  const [images, setImages] = useState([
+    { id: "1", isFirstImage: true },
+    { id: "2", isFirstImage: true },
+    { id: "3", isFirstImage: true },
+  ]);
 
+  const toggleImage = (id) => {
+    setImages((prevImages) =>
+      prevImages.map((item) =>
+        item.id === id ? { ...item, isFirstImage: !item.isFirstImage } : item
+      )
+    );
+  };
 
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => toggleImage(item.id)}>
+      <Image
+        source={
+          item.isFirstImage
+            ? require("./Src/assets/heart.png")
+            : require("./Src/assets/blackheart.png")
+        }
+        style={styles.image}
+      />
+    </TouchableOpacity>
+  );
 
-
-
-
-import { StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import home from "./Src/assets/house.png";
-import Home from "./Src/Reducer/Home";
-import pp from "./Src/assets/profile.png";
-import Favourite from "./Src/Reducer/Favourite";
-const Bottom = createBottomTabNavigator();
-
-const App = () => {
   return (
-    <NavigationContainer>
-      <Bottom.Navigator>
-        <Bottom.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Image
-                source={home}
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
-              />
-            ),
-          }}
-        />
-        <Bottom.Screen
-          name="Favourite"
-          component={Favourite}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Image
-                source={pp}
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
-              />
-            ),
-          }}
-        />
-      </Bottom.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <FlatList
+        data={images}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
   );
 };
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default ImageToggleList;

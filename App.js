@@ -284,65 +284,62 @@
 
 // const styles = StyleSheet.create({});
 
-import React, { useState } from "react";
-import {
-  View,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
 
-const ImageToggleList = () => {
-  const [images, setImages] = useState([
-    { id: "1", isFirstImage: true },
-    { id: "2", isFirstImage: true },
-    { id: "3", isFirstImage: true },
-  ]);
 
-  const toggleImage = (id) => {
-    setImages((prevImages) =>
-      prevImages.map((item) =>
-        item.id === id ? { ...item, isFirstImage: !item.isFirstImage } : item
-      )
-    );
-  };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => toggleImage(item.id)}>
-      <Image
-        source={
-          item.isFirstImage
-            ? require("./Src/assets/heart.png")
-            : require("./Src/assets/blackheart.png")
-        }
-        style={styles.image}
-      />
-    </TouchableOpacity>
-  );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Email from "./Src/Screen/Email";
+import Phone from "./Src/Screen/Summary";
+import { Provider } from "react-redux";
+import store from "./Src/Screen/Redux/Store";
+import Summary from "./Src/Screen/Summary";
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={images}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
+    <Provider store={store}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Email" component={Email} />
+        <Stack.Screen name="Phone" component={Phone} />
+
+        <Stack.Screen name="Summary" component={Summary} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    </Provider>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: 100,
-    height: 100,
-    margin: 10,
-  },
-});
+export default App;
 
-export default ImageToggleList;
+const styles = StyleSheet.create({});

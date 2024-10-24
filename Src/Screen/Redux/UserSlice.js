@@ -11,22 +11,23 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      state.auth = true, 
-      state.profile = action.payload;
-      AsyncStorage.setItem("general",JSON.stringify({auth:true,profile:action.payload}))
-
+      (state.auth = true), (state.profile = action.payload);
+      AsyncStorage.setItem(
+        "general",
+        JSON.stringify({ auth: true, profile: action.payload })
+      );
     },
     logout: (state, action) => {
       state.auth = false;
       state.profile = null;
-      AsyncStorage.removeItem("general")
+      AsyncStorage.removeItem("general");
     },
     initializeAuth: (state, action) => {
       state.auth = action.payload.auth;
       state.profile = action.payload.profile;
-    }
+    },
   },
 });
 
-export const { login, logout,initializeAuth} = userSlice.actions;
+export const { login, logout, initializeAuth } = userSlice.actions;
 export default userSlice.reducer;

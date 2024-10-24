@@ -23,7 +23,7 @@ const CheckboxScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text>Select Your Skills:</Text>
 
-      {/* iOS Developer */}
+      
       <TouchableOpacity
         style={styles.checkboxContainer}
         onPress={() => setIosDev(!iosDev)}

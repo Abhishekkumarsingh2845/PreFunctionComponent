@@ -1,7 +1,6 @@
 import firestore from "@react-native-firebase/firestore";
 
 
-
 export const sendMessage = async (senderId, receiverId, messageText) => {
   if (messageText.trim() === "") return;
   const message = {
@@ -12,10 +11,6 @@ export const sendMessage = async (senderId, receiverId, messageText) => {
   };
   await firestore().collection("messages").add(message);
 };
-
-
-
-
 
 export const fetchMessages = async (senderId, receiverId) => {
   const snapshot = await firestore()

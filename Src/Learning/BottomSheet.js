@@ -1,32 +1,28 @@
 
-import React, { useRef, useCallback } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import React, {useCallback, useMemo, useRef} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 
-const Homee = () => {
+const App = () => {
   const bottomSheetRef = useRef(null);
 
-  const openSheet = useCallback(() => {
-    bottomSheetRef.current?.expand();
-  }, []);
-
-  const closeSheet = useCallback(() => {
-    bottomSheetRef.current?.collapse();
+  const handleSheetChanges = useCallback(() => {
+    console.log('handleSheetChanges');
   }, []);
 
   return (
     <GestureHandlerRootView style={styles.container}>
-      <Button title="Open Bottom Sheet" onPress={openSheet} />
       <BottomSheet
         ref={bottomSheetRef}
-        index={-1}
-        snapPoints={["45%"]}
-        onClose={closeSheet}
-      >
+        onChange={handleSheetChanges}
+        index={0}
+        enablePanDownToClose={true}
+        snapPoints={['50%']}
+        handleComponent={null}
+        backgroundStyle={styles.bottomSheetBackground}>
         <BottomSheetView style={styles.contentContainer}>
-          <Text style={styles.sheetContent}>Hello from the Bottom Sheet!</Text>
-          <Button title="Close" onPress={closeSheet} />
+          <Text>Awesome 🎉</Text>
         </BottomSheetView>
       </BottomSheet>
     </GestureHandlerRootView>
@@ -36,20 +32,16 @@ const Homee = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: 'grey',
   },
   contentContainer: {
     flex: 1,
-    padding: 16,
-    alignItems: "center",
-    justifyContent: "center",
+    padding: 36,
+    alignItems: 'center',
   },
-  sheetContent: {
-    fontSize: 18,
-    marginBottom: 20,
+  bottomSheetBackground: {
+    borderRadius: 0, 
   },
 });
 
-export default Homee;
+export default App;
